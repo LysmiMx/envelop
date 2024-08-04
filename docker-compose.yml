@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  nginx:
+    build: .
+    container_name: webapp-orbit
+    restart: unless-stopped
+    volumes:
+      - ./dist:/usr/share/nginx/html
+    command: ["nginx", "-g", "daemon off;"]
