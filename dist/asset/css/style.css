@@ -1,7 +1,8 @@
 :root {
   --scale-up: 1;
   --scale-down: 0;
-  --font-body: calc(0.3rem + 1.0 * (100vmax / 120));}
+  /*--font-body: calc(0.3rem + 1.5 * (100vh / 120));}*/
+  --font-body: calc(0.2rem + 1.5 * (100dvh / 120));}
 
 @font-face {
   font-family: "Resphekt";
@@ -19,9 +20,25 @@
   src: url(/asset/font/DarkAndBlack-wLqZ.ttf);
 }
 
+@font-face {
+  font-family: "IttyBitty";
+  font-style: normal;
+  font-display: swap;
+  src: url(/asset/font/IttyBitty.ttf);
+}
+
+@font-face {
+  font-family: "LiebeFinden";
+  font-style: normal;
+  font-display: swap;
+  src: url(/asset/font/LiebeFinden.ttf);
+}
+
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200');
+
 html,
 body {
-  font-family: "DarkAndBlack";
+  font-family: "LiebeFinden";
   overflow: hidden;
   font-size: var(--font-body);
   padding: 0;
@@ -33,6 +50,32 @@ body {
   width: 100vw;
   background-color: #f0f0f0;
   margin: 0;
+
+
+    background-image: url('https://static.pexels.com/photos/414171/pexels-photo-414171.jpeg');
+  background-size:cover;
+        -webkit-animation: slidein 100s;
+        animation: slidein 100s;
+
+        -webkit-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+
+        -webkit-animation-iteration-count: infinite;
+        animation-iteration-count: infinite;
+
+        -webkit-animation-direction: alternate;
+        animation-direction: alternate;              
+}
+
+@-webkit-keyframes slidein {
+from {background-position: top; background-size:3000px; }
+to {background-position: -100px 0px;background-size:2750px;}
+}
+
+@keyframes slidein {
+from {background-position: top;background-size:3000px; }
+to {background-position: -100px 0px;background-size:2750px;}
+
 }
 
 .envelope {
@@ -64,6 +107,9 @@ body {
   z-index: 4;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .envelope-front {
@@ -76,7 +122,6 @@ body {
 
 .envelope.close .envelope-flap {
   animation: flap 2s forwards;
-  animation-delay: 2s;
 }
 
 .envelope:not(.close) .envelope-flap {
@@ -89,38 +134,37 @@ body {
   padding: 20px;
   border-radius: 1em;
   background-color: #fff;
-  scale: var(--scale-down);
+  /*scale: var(--scale-down);*/
 }
 
-.envelope:not(.close) .message  {
-  animation: upscale 5s forwards;
+.envelope:not(.close) .envelope-flap .message  {
+  animation: open_message 5s forwards;
 }
 
-.envelope.close .message  {
-  animation: downscale 2s forwards; 
+.envelope.close .envelope-flap .message  {
+  animation: close_message 2s forwards; 
 }
 
 @keyframes flap{
-  0% {}
+  0% { transform: rotateX(0deg); }
   100% {  transform: rotateX(-180deg);  }
 }
 
 @keyframes unflap{
   0% {  transform: rotateX(-180deg);  }
-  100% {}
+  100% {z-index: 0;  transform: rotateX(0deg); }
 }
 
-@keyframes upscale {
-  0% { z-index: 1;  scale: var(--scale-down); width: 90%; }
-  25% { z-index: 5; scale: var(--scale-down); width: 90%; }
-  40% { z-index: 5; scale: var(--scale-down); width: 90%; }
-  50% { z-index: 5; transform: translateY(-100px); scale: var(--scale-down); width: 90%;}
-  100% { z-index: 5; transform: translateY(-100px); scale: var(--scale-up); width: 90%;}
+@keyframes close_message {
+  0% { opacity: 1; }
+  29% { opacity: 1; }
+  30% { opacity: 0;}
+  100% { opacity: 0;}
 }
 
-@keyframes downscale {
-  0% { z-index: 5;  scale: var(--scale-up); }
-  25% { z-index: 5; transform:translateY(30px);  scale: var(--scale-up); }
-  50% {z-index: 5; scale: var(--scale-down); }
-  100% { z-index: 1; scale: var(--scale-down); }
+@keyframes open_message {
+  0% { opacity: 0; }
+  10% { opacity: 0; }
+  11% { opacity: 1;}
+  100% { opacity: 1;}
 }
