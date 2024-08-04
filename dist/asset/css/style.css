@@ -1,15 +1,29 @@
+:root {
+  --scale-up: 1;
+  --scale-down: 0;
+  --font-body: calc(0.3rem + 1.0 * (100vmax / 120));}
+
 @font-face {
   font-family: "Resphekt";
   font-style: normal;
   font-display: swap;
   src: url(/asset/font/Resphekt.ttf);
+  src: url(/asset/font/Resphekt.woff);
+  src: url(/asset/font/Resphekt.woff2);
+}
+
+@font-face {
+  font-family: "DarkAndBlack";
+  font-style: normal;
+  font-display: swap;
+  src: url(/asset/font/DarkAndBlack-wLqZ.ttf);
 }
 
 html,
 body {
-  font-family: "Resphekt";
+  font-family: "DarkAndBlack";
   overflow: hidden;
-  font-size: 15px;
+  font-size: var(--font-body);
   padding: 0;
   z-index: 1;
   display: flex;
@@ -66,18 +80,16 @@ body {
 }
 
 .envelope:not(.close) .envelope-flap {
-  animation: flap 2s forwards reverse;
+  animation: unflap 2s forwards;
 }
 
 
 .message {
-  
   display: flex;
-  height: 80%;
-  width: 90%;
   padding: 20px;
   border-radius: 1em;
   background-color: #fff;
+  scale: var(--scale-down);
 }
 
 .envelope:not(.close) .message  {
@@ -85,7 +97,7 @@ body {
 }
 
 .envelope.close .message  {
-  animation: upscale 2s forwards reverse; 
+  animation: downscale 2s forwards; 
 }
 
 @keyframes flap{
@@ -93,11 +105,22 @@ body {
   100% {  transform: rotateX(-180deg);  }
 }
 
+@keyframes unflap{
+  0% {  transform: rotateX(-180deg);  }
+  100% {}
+}
+
 @keyframes upscale {
-  0% { z-index: 1;  scale: 1; }
-  25% { z-index: 5; scale: 1;  }
-  40% { z-index: 5; scale: 1;  }
-  50% { z-index: 5; transform: translateY(-100px); scale: 1; }
-  100% {  z-index: 5;  scale: 3;    
-  }
+  0% { z-index: 1;  scale: var(--scale-down); width: 90%; }
+  25% { z-index: 5; scale: var(--scale-down); width: 90%; }
+  40% { z-index: 5; scale: var(--scale-down); width: 90%; }
+  50% { z-index: 5; transform: translateY(-100px); scale: var(--scale-down); width: 90%;}
+  100% { z-index: 5; transform: translateY(-100px); scale: var(--scale-up); width: 90%;}
+}
+
+@keyframes downscale {
+  0% { z-index: 5;  scale: var(--scale-up); }
+  25% { z-index: 5; transform:translateY(30px);  scale: var(--scale-up); }
+  50% {z-index: 5; scale: var(--scale-down); }
+  100% { z-index: 1; scale: var(--scale-down); }
 }
